@@ -6,6 +6,7 @@ function Transfer({ address, setBalance }) {
   const [recipient, setRecipient] = useState("");
   const [signature, setSignature] = useState("");
   const [recoveryBit, setRecoveryBit] = useState("");
+  const [publicKey, setPublicKey] = useState("");
 
   const setValue = (setter) => (evt) => setter(evt.target.value);
 
@@ -19,6 +20,9 @@ function Transfer({ address, setBalance }) {
         sender: address,
         amount: parseInt(sendAmount),
         recipient,
+        signature,
+        recoveryBit: parseInt(recoveryBit),
+        publicKey,
       });
       setBalance(balance);
     } catch (ex) {
@@ -60,9 +64,18 @@ function Transfer({ address, setBalance }) {
       <label>
         Recovery Bit
         <input
-          placeholder="Type the recoveryBit"
+          placeholder="1, 2..."
           value={recoveryBit}
           onChange={setValue(setRecoveryBit)}
+        ></input>
+      </label>
+
+      <label>
+        Public key (for verification)
+        <input
+          placeholder="Type in your public key"
+          value={publicKey}
+          onChange={setValue(setPublicKey)}
         ></input>
       </label>
 

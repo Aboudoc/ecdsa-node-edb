@@ -23,25 +23,25 @@ app.get("/balance/:address", (req, res) => {
 app.post("/send", (req, res) => {
   // get a signature from the client-side application
   // recover the public address from the signature
-  const { recoveryBit, signature, recipient, amount, publicKey } = req.body;
+  const { sender, recoveryBit, signature, recipient, amount, publicKey } =
+    req.body;
 
   let message = {
     from: sender,
-    to: receipient,
+    to: recipient,
     amount: amount,
   };
 
-  const recoveredPublicKey = secp.recoverPublicKey(
-    message,
-    signature,
-    recoveryBit
-  );
-  const sender = keccak256(recoveredPublicKey).slice(-20);
+  const recoveredPublicKey = keccak256(
+    secp.recoverPublicKey(message, signature, recoveryBit)
+  ).slice(-20);
+
+  // const sender = keccak256(recoveredPublicKey).slice(-20);
 
   setInitialBalance(sender);
   setInitialBalance(recipient);
 
-  if (toHex(sender) === publicKey) {
+  if (toHex(recoveredPublicKey) === publicKey) {
     if (balances[sender] < amount) {
       res.status(400).send({ message: "Not enough funds!" });
     } else {
