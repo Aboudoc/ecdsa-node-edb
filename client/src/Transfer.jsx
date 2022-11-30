@@ -5,6 +5,7 @@ function Transfer({ address, setBalance }) {
   const [sendAmount, setSendAmount] = useState("");
   const [recipient, setRecipient] = useState("");
   const [signature, setSignature] = useState("");
+  const [recoveryBit, setRecoveryBit] = useState("");
 
   const setValue = (setter) => (evt) => setter(evt.target.value);
 
@@ -53,6 +54,15 @@ function Transfer({ address, setBalance }) {
           placeholder="The signature"
           value={signature}
           onChange={setValue(setSignature)}
+        ></input>
+      </label>
+
+      <label>
+        Recovery Bit
+        <input
+          placeholder="Type the recoveryBit"
+          value={recoveryBit}
+          onChange={setValue(setRecoveryBit)}
         ></input>
       </label>
 
