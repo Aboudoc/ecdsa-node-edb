@@ -24,6 +24,12 @@ app.post("/send", (req, res) => {
   // recover the public address from the signature
   const { recoveryBit, signature, recipient, amount } = req.body;
 
+  let message = {
+    from: sender,
+    to: receipient,
+    amount: amount,
+  };
+
   const recoveredPublicKey = secp.recoverPublicKey(
     message,
     signature,
